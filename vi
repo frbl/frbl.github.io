@@ -1,0 +1,23 @@
+#!/bin/bash
+echo "Installing frbl vimrc"
+dir=`pwd`
+cd ~
+apt-get install -y git vim
+brew install -y vim
+
+mkdir Drive
+cd Drive
+git clone git@github.com:frbl/dotfiles.git
+./setup.sh
+cd ~
+
+mv .vimrc .vimrc-old
+mkdir -p .vim/bundle/
+git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
+curl -L http://goo.gl/45PoJG > .vimrc
+
+echo 'Installing vim plugins, this might take a while..'
+echo | echo | echo | vim +PluginInstall +qall &>/dev/null
+
+cd $dir
+echo "Installed frbl vimrc"
